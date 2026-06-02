@@ -1,17 +1,40 @@
 :root {
   --primary-color: #538fca;
-  --white: #fff;
+  --light: #b5d8fa;
+  --dark: #2c5d8a;
+  --darkest: #1a3b5c;
 }
 
 html,
 body {
-    height: 100vh;
-    width: 100vw;
-    margin: 0;
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
 }
 
 body {
-    background-color: var(--primary-color);
+  background-color: var(--primary-color);
+}
+
+.background-image {
+  position: relative;
+  max-width: 70em;
+  margin: 1em auto;
+  padding: 1.5em;
+  font-size: 1.2em;
+}
+
+.background-image::before {
+  position: absolute;
+  content: '';
+  inset: 0;
+  background: #fed;
+  border: 2.25px dotted var(--primary-color);
+  border-radius: 20px 4px 30px 8px;
+  z-index: -1;
+  box-shadow: 5px 5px 5px #0009;
+  background-image: url(https://res.cloudinary.com/dangvxnul/image/upload/v1716225651/paper-dark_fuujeq.jpg);
+  background-size: 100px;
 }
 
 
@@ -22,10 +45,82 @@ body {
 }
 
 .btn-outline-custom:hover {
-  color: var(--white);
+  color: var(--light);
   background-color: var(--primary-color);
+  box-shadow: inset 2px 2px 2px var(--light)
+}
+
+.btn-outline-custom:active {
+  color: var(--light) !important;
+  background-color: var(--primary-color) !important;
+  box-shadow: inset 2px 2px 2px var(--dark)  !important;
+}
+
+.btn-custom {
+  color: var(--dark);
+  border-color: var(--dark);
+  background-color: transparent;
+}
+
+.btn-custom:hover {
+  color: var(--light);
+  background-color: var(--dark);
+  box-shadow: inset 2px 2px 2px var(--light);
+}
+
+.btn-custom:active {
+  color: var(--light) !important;
+  background-color: var(--dark) !important;
+  box-shadow: inset 2px 2px 2px var(--darkest) !important;
+  border-color: var(--darkest) !important;
+}
+
+.menu-button {
+  background-color: transparent !important;
+  border: solid 1.5px var(--primary-color);
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+.navbar-toggler-icon {
+  stroke: var(--primary-color) !important;
+}
+
+.menu-button:active {
+  border: solid 1.5px var(--primary-color);
+  background-color: var(--light) !important;
+  box-shadow: inset 2px 2px 2px var(--dark) !important;
 }
 
 .offcanvas-title {
-    color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+#booknote {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px 0;
+}
+
+.book-info {
+  display: flex;
+  flex-direction: column;
+  align-content: start;
+}
+
+.book-review {
+  max-width: 750px;
+  min-width: 650px;
+}
+
+.sorting-info {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 300px 10px 15px;
+}
+
+#view-more-btn {
+  align-self: flex-end;
+  margin-top: auto;
+  margin-bottom: 15px;
 }
