@@ -117,6 +117,7 @@ body {
 #booknote {
   display: flex;
   justify-content: space-around;
+  min-height: 350px;
   padding: 20px 0;
 }
 
@@ -129,6 +130,8 @@ body {
 .book-review {
   max-width: 750px;
   min-width: 650px;
+  max-height: 125px;
+  overflow-y: hidden;
 }
 
 .sorting-info {
@@ -139,8 +142,9 @@ body {
 
 #view-more-btn {
   align-self: flex-end;
-  margin-top: auto;
-  margin-bottom: 15px;
+  position: absolute;
+  bottom: 0;
+  margin: 15px 0;
 }
 
 .footer {

@@ -40,25 +40,27 @@
         </div>
     </nav>
 
-    <!--  books.forEach(function(book) { -->
-        <div id="torn_edge_banner" class="torn_container torn_left torn_right">
-            <div id="booknote" class="container mt-4 background-image">
-                <div class="book-cover">
-                    <img src="https://placehold.co/250x400" alt="book cover">
-                    <!-- <img src=" book.cover " alt="Book Cover"/> -->
-                </div>
-                <div class="book-info">
-                    <h1> book.title </h1>
-                    <div class="sorting-info">
-                        <p>rating</p>
-                        <p>date</p>
+    <div class="page-content">
+        <% books.forEach(function(book) { %>
+            <div id="torn_edge_banner" class="torn_container torn_left torn_right">
+                <div id="booknote" class="container mt-4 background-image">
+                    <div class="book-cover">
+                        <!-- <img src="https://placehold.co/250x400" alt="book cover"> -->
+                        <img src="<%= book.cover %>" alt="Book Cover"/>
                     </div>
-                    <div class="book-review">
-                        <p> book.review </p>
+                    <div class="book-info">
+                        <h1> <%= book.title %> </h1>
+                        <div class="sorting-info">
+                            <p>rating: <%= book.rating %></p>
+                            <p>date: <%= book.date %></p>
+                        </div>
+                        <div class="book-review">
+                            <p> <%= book.review %> </p>
+                        </div>
+                        <a href="/notes" class="btn btn-custom" id="view-more-btn">View More</a>
                     </div>
-                    <a href="/notes" class="btn btn-custom" id="view-more-btn">View More</a>
                 </div>
             </div>
-        </div>
-        <!-- });  -->
+        <% }); %> 
+    </div>
     <%- include('./partials/footer') %>
