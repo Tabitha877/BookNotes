@@ -3,6 +3,10 @@
   --light: #b5d8fa;
   --dark: #2c5d8a;
   --darkest: #1a3b5c;
+
+  --warning: #a66d0b;
+  --warning-light: #f0ad4e;
+  --warning-dark: #8a4d0c;
 }
 
 html,
@@ -100,6 +104,26 @@ body {
   padding: 5px 10px;
 }
 
+.delete-btn {
+  color: var(--warning);
+  border-color: var(--warning);
+  background-color: transparent;
+  margin-left: 10px;
+}
+
+.delete-btn:hover {
+  color: var(--warning-light);
+  background-color: var(--warning);
+  box-shadow: inset 2px 2px 2px var(--warning-light);
+}
+
+.delete-btn:active {
+  color: var(--warning-light) !important;
+  background-color: var(--warning) !important;
+  box-shadow: inset 2px 2px 2px var(--warning-dark) !important;
+  border-color: var(--warning-dark) !important;
+}
+
 .navbar-toggler-icon {
   stroke: var(--primary-color) !important;
 }
@@ -119,6 +143,12 @@ body {
   justify-content: space-around;
   min-height: 350px;
   padding: 20px 0;
+}
+
+#booknote-big {
+  display: flex;
+  justify-content: space-around;
+  height: 100%;
 }
 
 .book-info {
@@ -144,7 +174,21 @@ body {
   align-self: flex-end;
   position: absolute;
   bottom: 0;
-  margin: 15px 0;
+  right: 0;
+  margin: 15px 25px 30px 0;
+}
+
+.left-column {
+  width: 100;
+  margin-right: 25px;
+}
+
+.right-column {
+  margin-top: 35px;
+}
+
+.bookinfo-big {
+  margin-top: 25px;
 }
 
 .footer {

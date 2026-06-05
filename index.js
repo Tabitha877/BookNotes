@@ -14,13 +14,20 @@ const db = new pg.Client({
     port: 5432,
 });
 
+
+
 db.connect();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
+let bookImageExistsCache = {
+    
+};
+
 let books = [
     {
+        id: 1,
         title: "braaf",
         rating: 4.5,
         date: "2024-06-01",
@@ -29,6 +36,7 @@ let books = [
         olid: "OL40215390M",
     },
     {
+        id: 2,
         title: "de jongen in de gestreepte pyjama",
         rating: 4.8,
         date: "2023-12-15",
@@ -39,13 +47,23 @@ let books = [
 ]
 
 async function getCover(olid) {
-    try {
-        const response = await axios.get(`https://covers.openlibrary.org/b/olid/${olid}-L.jpg`);
-        return response.config.url;
+
+    if(bookImageExistsCache[olid] == undefined) {
+        try {
+            const response = await axios.get(`https://covers.openlibrary.org/b/olid/${olid}-L.jpg`);
+            bookImageExistsCache[olid] = true;
+        }
+        catch (error) {
+            bookImageExistsCache[olid] = false;
+        }
     }
-    catch (error) {
-        console.error("Error fetching cover image:", error);
-        return "https://placehold.co/250x400"; // Return a placeholder image URL in case of an error
+    
+    const exists = bookImageExistsCache[olid];
+    if(exists) {
+        return `https://covers.openlibrary.org/b/olid/${olid}-L.jpg`;
+    }
+    else {
+        return "https://placehold.co/250x400";
     }
 }
 
@@ -59,7 +77,16 @@ app.get("/", async (req, res) => {
     });
 });
 
+app.get("/notes", async (req, res) => {
+    const bookId = req.query.bookId;
+    const book = books.find((book) => book.id == bookId);
+    const cover = await getCover(book.olid);
 
+    res.render("book-note.ejs", {
+        book: book,
+        cover: cover,
+    });
+})
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
