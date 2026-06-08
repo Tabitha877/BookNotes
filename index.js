@@ -88,6 +88,28 @@ app.get("/notes", async (req, res) => {
     });
 })
 
+app.get("/edit", (req, res) => {
+    const bookId = req.query.bookId;
+    const book = books.find((book) => book.id == bookId);
+    res.render('edit.ejs', {
+        book: book,
+    });
+});
+
+app.post("/edit", (req, res) => {
+   const bookId = req.query.bookId;
+   const oldBookInfo = books.find((book) => book.id == bookId);
+   console.log(req.body);
+//    const updatedBookInfo = {
+//         id: bookId,
+//         title: req.body.updatedTitle || oldBookInfo.title,
+//         content: req.body.updatedReview || oldBookInfo.review,
+//         author: req.body.updatedRating || oldBookInfo.rating,
+//         date: req.body.updatedDate,
+//     }
+
+});
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 })

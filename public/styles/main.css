@@ -145,7 +145,7 @@ body {
   padding: 20px 0;
 }
 
-#booknote-big {
+.booknote-big {
   display: flex;
   justify-content: space-around;
   height: 100%;
@@ -167,7 +167,8 @@ body {
 .sorting-info {
   display: flex;
   justify-content: space-between;
-  margin: 10px 300px 10px 15px;
+  margin: 10px 400px 10px 0;
+  gap: 25px;
 }
 
 #view-more-btn {
@@ -189,6 +190,43 @@ body {
 
 .bookinfo-big {
   margin-top: 25px;
+}
+
+.buttons {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  margin: 20px;
+}
+
+#changeBook {
+  display: inline-block;
+  width: 100%;
+}
+
+#changeBook label {
+  position: fixed;
+}
+
+#changeBook input, textarea {
+  margin-left: 150px;
+}
+
+.inputTitle {
+  width: 75%;
+  margin: 20px 0;
+}
+
+.inputReview {
+  width: 75%;
+  max-height: 400px;
+}
+
+#save-btn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 40px;
 }
 
 .footer {

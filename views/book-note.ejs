@@ -1,14 +1,14 @@
 <%- include('./partials/header') %>
 
     <div class="page-content">
-        <div id="booknote-big" class="container background-image">
+        <div class="container booknote-big background-image">
             <div class="left-column">
                 <div class="book-cover">
                     <img src="<%= cover %>" alt="Book Cover"/>   
                 </div>
                 <div class="bookinfo-big">
                     <div class="date">
-                        <p>date: <%= book.date %></p>
+                        <p>date of read: <%= book.date %></p>
                     </div>
                     <div class="rating">
                         <p>rating: <%= book.rating %></p>
@@ -21,14 +21,16 @@
                     <p><%= book.review %></p>
                 </div>
             </div>
-            <form action="/edit" method="get">
-                <input type="hidden" name="bookId" value="<%= book.id %>">
-                <button type="submit" class="btn btn-custom" id="edit-btn">Edit</button>
-            </form>
-            <form action="/delete" method="post">
-                <input type="hidden" name="bookId" value="<%= book.id %>">
-                <button type="submit" class="btn delete-btn" id="delete-btn">Delete</button>
-            </form>
+            <div class="buttons">
+                <form action="/edit" method="get">
+                    <input type="hidden" name="bookId" value="<%= book.id %>">
+                    <button type="submit" class="btn btn-custom" id="edit-btn">Edit</button>
+                </form>
+                <form action="/delete" method="post">
+                    <input type="hidden" name="bookId" value="<%= book.id %>">
+                    <button type="submit" class="btn delete-btn" id="delete-btn">Delete</button>
+                </form>
+            </div>
         </div>
     </div>
 
