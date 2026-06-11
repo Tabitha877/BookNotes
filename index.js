@@ -88,6 +88,14 @@ app.get("/notes", async (req, res) => {
     });
 })
 
+app.get("/delete", (req, res) => {
+    const bookId = req.query.bookId;
+    const searchIndex = books.find((book) => book.id == bookId);
+    books = books.filter((book) => book.id != bookId);
+    
+    res.redirect("/");
+});
+
 app.get("/edit", (req, res) => {
     const bookId = req.query.bookId;
     const book = books.find((book) => book.id == bookId);
