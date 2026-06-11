@@ -104,6 +104,20 @@ body {
   padding: 5px 10px;
 }
 
+.menu-button:active {
+  border: solid 1.5px var(--primary-color);
+  background-color: var(--light) !important;
+  box-shadow: inset 2px 2px 2px var(--dark) !important;
+}
+
+.navbar-toggler-icon {
+  stroke: var(--primary-color) !important;
+}
+
+.offcanvas-title {
+  color: var(--primary-color);
+}
+
 .delete-btn {
   color: var(--warning);
   border-color: var(--warning);
@@ -124,18 +138,25 @@ body {
   border-color: var(--warning-dark) !important;
 }
 
-.navbar-toggler-icon {
-  stroke: var(--primary-color) !important;
+#go-back-btn {
+  position: absolute;
+  right: 25px;
+  height: 30px;
+  padding: 2px;
+  color: var(--warning);
+  border-color: var(--warning); 
 }
 
-.menu-button:active {
-  border: solid 1.5px var(--primary-color);
-  background-color: var(--light) !important;
-  box-shadow: inset 2px 2px 2px var(--dark) !important;
+#go-back-btn:hover {
+  color: var(--warning-light);
+  background-color: var(--warning);
+  box-shadow: inset 2px 2px 2px var(--warning-light);
 }
 
-.offcanvas-title {
-  color: var(--primary-color);
+#go-back-btn:active {
+  color: var(--warning-light);
+  background-color: var(--warning);
+  box-shadow: inset 2px 2px 2px var(--warning-dark);
 }
 
 #booknote {
@@ -149,6 +170,10 @@ body {
   display: flex;
   justify-content: space-around;
   height: 100%;
+}
+
+.book-cover img {
+  max-height: 400px;
 }
 
 .book-info {
@@ -202,6 +227,7 @@ body {
 #changeBook {
   display: inline-block;
   width: 100%;
+  padding-top: 50px;
 }
 
 #changeBook label {

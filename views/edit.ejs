@@ -4,10 +4,10 @@
         <div class="container booknote-big background-image">
             <form id="changeBook" action="/edit" method="post">
                 <label for="title">Title:</label>
-                <input id="title" class="inputTitle" type="text" autofocus="true" maxlength="75" name="updatedTitle" value="<%= book.title %>" required>
+                <input id="title" class="inputTitle" type="text" maxlength="75" name="updatedTitle" value="<%= book.title %>" required>
                 <hr>
                 <label for="review">review:</label>
-                <textarea id="review" class="inputReview" name="updatedReview" required> <%= book.review %></textarea>
+                <textarea id="review" class="inputReview" name="updatedReview" autofocus="true" required> <%= book.review %></textarea>
                 <hr>
                 <label for="date">Date of read:</label>
                 <input id="date" class="inputDate" type="date" name="updatedDate" value="<%= book.date %>" required>
@@ -15,7 +15,14 @@
                 <label for="rating">Rating:</label>
                 <input id="rating" type="range" class="inputRating" name="updatedRating" value="<%= book.rating %>" min="0" max="5" step="0.1" oninput="this.nextElementSibling.value = this.value" required>
                 <output><%= book.rating %></output>
+                <input type="hidden" name="bookId" value="<%= book.id %>">
                 <button id="save-btn" class="btn btn-custom" type="submit">Save</button>
+            </form>
+            <form action="/notes" method="get">
+                <input type="hidden" name="bookId" value="<%= book.id %>">
+                <button type="submit" class="btn" id="go-back-btn">
+                    <span class="material-symbols-outlined">close_small</span>
+                </button>
             </form>
         </div>
     </div>

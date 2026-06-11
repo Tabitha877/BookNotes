@@ -97,17 +97,23 @@ app.get("/edit", (req, res) => {
 });
 
 app.post("/edit", (req, res) => {
-   const bookId = req.query.bookId;
-   const oldBookInfo = books.find((book) => book.id == bookId);
-   console.log(req.body);
-//    const updatedBookInfo = {
-//         id: bookId,
-//         title: req.body.updatedTitle || oldBookInfo.title,
-//         content: req.body.updatedReview || oldBookInfo.review,
-//         author: req.body.updatedRating || oldBookInfo.rating,
-//         date: req.body.updatedDate,
-//     }
-
+    const bookId = parseInt(req.body.bookId)
+    const oldBookInfo = books.find((book) => book.id == bookId);
+    const updatedBookInfo = {
+        id: bookId,
+        title: req.body.updatedTitle || oldBookInfo.title,
+        rating: req.body.updatedRating || oldBookInfo.rating,
+        date: req.body.updatedDate,
+        review: req.body.updatedReview || oldBookInfo.review,
+        cover: oldBookInfo.cover,
+        olid: oldBookInfo.olid,
+    }
+    for (let i = 0; i < books.length; i++) {
+        if (books[i].id === bookId) {
+            books[i] = updatedBookInfo;
+        }
+    }
+    res.redirect("/")
 });
 
 app.listen(port, () => {

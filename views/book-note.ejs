@@ -21,6 +21,11 @@
                     <p><%= book.review %></p>
                 </div>
             </div>
+            <form action="/" method="get">
+                <button type="submit" class="btn" id="go-back-btn">
+                    <span class="material-symbols-outlined">close_small</span>
+                </button>
+            </form>
             <div class="buttons">
                 <form action="/edit" method="get">
                     <input type="hidden" name="bookId" value="<%= book.id %>">
