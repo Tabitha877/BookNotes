@@ -9,7 +9,7 @@ const port = 3000;
 const db = new pg.Client({
     user: "postgres",
     host: "localhost",
-    database: "World",
+    database: "BookNotes",
     password: "PosT973_L",
     port: 5432,
 });
@@ -21,57 +21,33 @@ db.connect();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-let bookImageExistsCache = {
-    
-};
 
-let books = [
-    {
-        id: 1,
-        title: "braaf",
-        rating: 4.5,
-        date: "2024-06-01",
-        review: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer malesuada sollicitudin dictum. Donec euismod lorem et accumsan tincidunt. Nunc maximus ipsum lacus, et laoreet enim iaculis in. Donec varius finibus dui non ultrices. Donec placerat suscipit purus at porttitor. Sed quis tempor ex. Ut pretium mauris at tincidunt fermentum. Vestibulum volutpat sapien eget felis lobortis bibendum. Suspendisse finibus consequat risus, mollis aliquam lorem vehicula et.",
-        cover: "",
-        olid: "OL40215390M",
-    },
-    {
-        id: 2,
-        title: "de jongen in de gestreepte pyjama",
-        rating: 4.8,
-        date: "2023-12-15",
-        review: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris blandit a lorem et blandit. Aenean at elit at ipsum tristique molestie nec non lectus. Ut felis turpis, vulputate in neque in, dapibus fermentum mi. Phasellus eget ex scelerisque, iaculis dui et, dignissim sem. Donec pellentesque maximus sollicitudin. Morbi ut turpis placerat, tincidunt est eu, pretium turpis. Aenean sed lectus magna. Duis et odio eget ligula porta porttitor. Nullam dolor nibh, venenatis at elit sit amet, mattis accumsan massa. In vitae urna ut diam aliquet egestas. Sed porttitor imperdiet efficitur. Ut lobortis suscipit nisi, sed mollis mi dignissim non. Quisque ullamcorper ex arcu, ut consequat enim semper eget. Phasellus augue enim, blandit id molestie non, efficitur dictum velit. Etiam viverra imperdiet arcu, at scelerisque ipsum condimentum in. Nulla fermentum ipsum ut lacinia mollis. Ut porttitor volutpat nisl non eleifend. Nulla id ex quis diam rhoncus bibendum. Pellentesque at efficitur quam.",
-        cover: "",
-        olid: "OL47191563M",
-    }
-]
-
-async function getCover(olid) {
-
-    if(bookImageExistsCache[olid] == undefined) {
+async function getNewCover(olid, bookId) {
+    const url = `https://covers.openlibrary.org/b/olid/${olid}-L.jpg`;
+    const noCover = await db.query("SELECT * FROM books WHERE cover IS NULL");
+    if (noCover) {
         try {
-            const response = await axios.get(`https://covers.openlibrary.org/b/olid/${olid}-L.jpg`);
-            bookImageExistsCache[olid] = true;
+            await db.query("UPDATE books SET cover = ($1) WHERE cover IS NULL AND id = ($2)", [url, bookId]);
         }
         catch (error) {
-            bookImageExistsCache[olid] = false;
+            console.log(error);
         }
-    }
-    
-    const exists = bookImageExistsCache[olid];
-    if(exists) {
-        return `https://covers.openlibrary.org/b/olid/${olid}-L.jpg`;
-    }
-    else {
-        return "https://placehold.co/250x400";
-    }
+    } 
 }
 
 app.get("/", async (req, res) => {
+    let result = await db.query("SELECT * FROM books");
+    let books = result.rows;
+    
     for (let i = 0; i < books.length; i++) {
-        const result = await getCover(books[i].olid);
+        const bookId = books[i].id
+        const result = await getNewCover(books[i].olid, bookId);
         books[i].cover = result;
     }
+
+    result = await db.query("SELECT * FROM books");
+    books = result.rows;    
+
     res.render("index.ejs", {
         books: books,
     });
@@ -79,48 +55,52 @@ app.get("/", async (req, res) => {
 
 app.get("/notes", async (req, res) => {
     const bookId = req.query.bookId;
-    const book = books.find((book) => book.id == bookId);
-    const cover = await getCover(book.olid);
-
+    const result = await db.query("SELECT * FROM books WHERE id = ($1)", [bookId]);
+    const selectedBook = result.rows[0];
+    
     res.render("book-note.ejs", {
-        book: book,
-        cover: cover,
+        book: selectedBook,
     });
 })
 
-app.get("/delete", (req, res) => {
+app.get("/delete", async (req, res) => {
     const bookId = req.query.bookId;
-    const searchIndex = books.find((book) => book.id == bookId);
-    books = books.filter((book) => book.id != bookId);
-    
+
+    try {
+        await db.query("DELETE * FROM books WHERE id = ($1)", [bookId]);
+    } catch (error) {
+        console.log(error)
+    }
+
     res.redirect("/");
 });
 
-app.get("/edit", (req, res) => {
+app.get("/edit", async (req, res) => {
     const bookId = req.query.bookId;
-    const book = books.find((book) => book.id == bookId);
+    const result = await db.query("SELECT * FROM books WHERE id = ($1)", [bookId]);
+    const selectedBook = result.rows[0];
+
     res.render('edit.ejs', {
-        book: book,
+        book: selectedBook,
     });
 });
 
-app.post("/edit", (req, res) => {
-    const bookId = parseInt(req.body.bookId)
-    const oldBookInfo = books.find((book) => book.id == bookId);
-    const updatedBookInfo = {
-        id: bookId,
-        title: req.body.updatedTitle || oldBookInfo.title,
-        rating: req.body.updatedRating || oldBookInfo.rating,
-        date: req.body.updatedDate,
-        review: req.body.updatedReview || oldBookInfo.review,
-        cover: oldBookInfo.cover,
-        olid: oldBookInfo.olid,
+app.post("/edit", async (req, res) => {
+    const bookId = req.body.bookId;
+    const updatedTitle = req.body.updatedTitle;
+    const updatedRating = parseFloat(req.body.updatedRating);
+    const updatedReview = req.body.updatedReview;
+    const updatedDate = req.body.updatedDate;
+
+    try {
+        await db.query(
+            "UPDATE books SET title = $1, rating = $2, date = $3, review = $4 WHERE id = $5",
+            [updatedTitle, updatedRating, updatedDate, updatedReview, bookId]
+        );
+    } catch (error) {
+        console.log(error);
     }
-    for (let i = 0; i < books.length; i++) {
-        if (books[i].id === bookId) {
-            books[i] = updatedBookInfo;
-        }
-    }
+
     res.redirect("/")
 });
 

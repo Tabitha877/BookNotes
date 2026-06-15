@@ -10,7 +10,7 @@
                 <textarea id="review" class="inputReview" name="updatedReview" autofocus="true" required> <%= book.review %></textarea>
                 <hr>
                 <label for="date">Date of read:</label>
-                <input id="date" class="inputDate" type="date" name="updatedDate" value="<%= book.date %>" required>
+                <input id="date" class="inputDate" type="date" name="updatedDate" value="<%= book.date %>">
                 <hr>
                 <label for="rating">Rating:</label>
                 <input id="rating" type="range" class="inputRating" name="updatedRating" value="<%= book.rating %>" min="0" max="5" step="0.1" oninput="this.nextElementSibling.value = this.value" required>
