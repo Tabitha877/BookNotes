@@ -2,9 +2,24 @@ import express from "express";
 import bodyParser from "body-parser";
 import pg from "pg";
 import axios from "axios";
+import http from "http";
+import https from "https";
 
 const app = express();
 const port = 3000;
+
+// 1. Maak de agents aan BINNEN de globale scope
+const httpAgent = new http.Agent({ keepAlive: true });
+const httpsAgent = new https.Agent({ keepAlive: true });
+
+// 2. Configureer Axios met de agents
+const axiosInstance = axios.create({
+  httpAgent,
+  httpsAgent,
+  timeout: 10000
+});
+
+
 
 const db = new pg.Client({
     user: "postgres",
@@ -35,6 +50,29 @@ async function getNewCover(olid, bookId) {
     } 
 }
 
+async function fetchData(title) {
+    let bookOptions = [];
+    let bookCovers = [];
+
+    // get the book-info for the books with a matching title
+    let url = `https://openlibrary.org/search.json?title=${title}&limit=15`;
+    url = url.replace(/ /g, '+');
+
+    let response = await axiosInstance.get(url);
+    bookOptions = response.data.docs;
+
+    for(let i = 0; i < bookOptions.length; i++) {
+        const urlCover = `https://covers.openlibrary.org/b/olid/${bookOptions[i].cover_edition_key}-M.jpg`;
+        bookCovers[i] = urlCover;
+    }
+
+
+    return {
+        bookCovers,
+        bookOptions
+    }
+}
+
 app.get("/", async (req, res) => {
     let result = await db.query("SELECT * FROM books");
     let books = result.rows;
@@ -46,7 +84,7 @@ app.get("/", async (req, res) => {
     }
 
     result = await db.query("SELECT * FROM books");
-    books = result.rows;    
+    books = result.rows;
 
     res.render("index.ejs", {
         books: books,
@@ -67,7 +105,7 @@ app.get("/delete", async (req, res) => {
     const bookId = req.query.bookId;
 
     try {
-        await db.query("DELETE * FROM books WHERE id = ($1)", [bookId]);
+        await db.query("DELETE FROM books WHERE id = ($1)", [bookId]);
     } catch (error) {
         console.log(error)
     }
@@ -104,6 +142,57 @@ app.post("/edit", async (req, res) => {
     res.redirect("/")
 });
 
+app.get("/add", (req, res) => {
+    res.render("add.ejs", {
+        showOptions: false,
+    });
+});
+
+app.post("/add", async (req, res) => {
+    console.log(req.body);
+
+    try {
+        await db.query("INSERT INTO books (title, rating, review, olid, date) VALUES ($1, $2, $3, $4, $5)", [req.body.title, req.body.rating, req.body.review, req.body.olid, req.body.date]);
+    } catch(error) {
+        console.log(error);
+    }
+    res.redirect("/");
+});
+
+app.post("/search", async (req, res) => {
+    const bookTitle = req.body.title;
+    let data;
+    try {
+        data = await fetchData(bookTitle);
+    } catch (error) {
+        console.log(error);
+        res.send('error fetching data, try again later or go to <a href="/">home-page</a>')
+    };
+
+    res.render("add.ejs", {
+        showBookCover: data.bookCovers,
+        showBookInfo: data.bookOptions,
+        showOptions: true,
+        searchTitle: bookTitle
+    });
+});
+
+app.get('/select', (req, res) => {
+    const title = req.query.bookTitle;
+    const olid = req.query.olid;
+
+    console.log("check: " + olid);
+
+    res.render("add.ejs", {
+        title: title,
+        olid: olid
+    });
+});
+
+app.get("/cancel", (req, res) => {
+    res.redirect('/add');
+});
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
-})
+});

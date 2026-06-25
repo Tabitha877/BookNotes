@@ -7,7 +7,7 @@
                 <input id="title" class="inputTitle" type="text" maxlength="75" name="updatedTitle" value="<%= book.title %>" required>
                 <hr>
                 <label for="review">review:</label>
-                <textarea id="review" class="inputReview" name="updatedReview" autofocus="true" required> <%= book.review %></textarea>
+                <textarea id="review" class="inputReview" name="updatedReview" maxlength="1250" autofocus="true" required> <%= book.review %></textarea>
                 <hr>
                 <label for="date">Date of read:</label>
                 <input id="date" class="inputDate" type="date" name="updatedDate" value="<%= book.date %>">

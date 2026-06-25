@@ -1,0 +1,87 @@
+<%- include('./partials/header') %>
+
+<div class="page-content">
+    <div class="container booknote-add background-image">
+        <form action="/" method="get">
+            <button type="submit" class="btn" id="go-back-btn">
+                <span class="material-symbols-outlined">close_small</span>
+            </button>
+        </form>
+        <form id="searchBook" action="/search" method="post">
+            <label for="title">Title:</label>
+            <% if(locals.title) { %>
+                <input id="title" class="inputTitle saved" type="text" maxlength="75" name="title" value="<%= title %>" readonly>
+                <form action="/add" method="get">
+                    <button type="submit" id="break-btn" class="btn btn-custom">Clear</button>
+                </form>
+                <% } else { %>
+                <input id="title" class="inputTitle" type="text" maxlength="75" name="title" placeholder="Title" required>
+                <button id="searchBookBtn" class="btn btn-custom" type="submit">Search Book</button>
+            <% } %>
+        </form>    
+        <form id="changeBook" action="/add" method="post">
+            <% if(locals.title) { %>
+                <input type="hidden" name="olid" value="<%= olid %>">
+                <input type="hidden" name="title" value="<%= title %>" required>
+                <hr>
+                <label for="review">review:</label>
+                <textarea id="review" class="inputReview" name="review" autofocus="true" maxlength="1250" placeholder="Type here your review" required></textarea>
+                <hr>
+                <label for="date">Date of read:</label>
+                <input id="date" class="inputDate" type="date" name="date" required>
+                <hr>
+                <label for="rating">Rating:</label>
+                <input id="rating" type="range" class="inputRating" name="rating" min="0" max="5" step="0.1" oninput="this.nextElementSibling.value = this.value" required>
+                <output></output>
+                <button id="save-btn" class="btn btn-custom" type="submit">Save</button>
+            <% } %>
+        </form>
+    </div>
+</div>
+
+<% if(locals.showOptions) { %>
+    <div id="book-options" class="d-flex flex-column align-items-stretch flex-shrink-0 bg-body-tertiary" style="width: 380px;"> 
+        <a href="/" class="d-flex align-items-center flex-shrink-0 p-3 link-body-emphasis text-decoration-none border-bottom"> 
+            <svg class="bi pe-none me-2" width="30" height="24" aria-hidden="true">
+                <use xlink:href="#bootstrap"></use>
+            </svg> 
+            <span class="fs-5 fw-semibold">Choose Your book:</span> 
+        </a> 
+        <div id="options">
+            <% if(showBookInfo.length == 0) { %>
+                <div id="no-books-found">
+                    <p>Sorry, we couldn't find any results for: <br> '<%= searchTitle %>'</p>
+                </div>
+            <% } %>
+            <% for(let i = 0; i < showBookInfo.length; i++) { %>
+                <div class="list-group list-group-flush border-bottom scrollarea"> 
+                    <div class="list-group-item list-group-item-action py-3 lh-sm option"> 
+                        <form action="/select" method="get">
+                            <input type="hidden" name="olid" value="<%= showBookInfo[i].cover_edition_key%>">
+                            <input type="hidden" name="bookTitle" value="<%= showBookInfo[i].title %>">
+                            <button type="submit" id="choose-book-btn" class="btn btn-custom">choose</button>
+                        </form>
+                            <div class="d-flex w-100 align-items-center justify-content-between"> 
+                                <small>
+                                    <img src=" <%= showBookCover[i] %>" alt="book cover">
+                                </small> 
+                                <strong class="mb-1 book-title"><%= showBookInfo[i].title %></strong> 
+                            </div> 
+                            <div class="col-12 mb-1 small author-name">
+                                <%= showBookInfo[i].author_name %>
+                            </div>
+                        </div>
+                    </div> 
+            <% } %>
+        </div>
+        <form action="/cancel" method="get">
+            <button id="cancel-btn" class="btn btn-custom" type="submit">Cancel</button>
+        </form>
+    </div>
+    
+<% } %>
+
+<%- include('./partials/footer') %>
+
+
+

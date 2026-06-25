@@ -1,6 +1,7 @@
 :root {
   --primary-color: #538fca;
   --light: #b5d8fa;
+  --lightest: #e3f2fd;
   --dark: #2c5d8a;
   --darkest: #1a3b5c;
 
@@ -172,6 +173,12 @@ body {
   height: 100%;
 }
 
+.booknote-add {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 .book-cover img {
   max-height: 400px;
 }
@@ -227,7 +234,6 @@ body {
 #changeBook {
   display: inline-block;
   width: 100%;
-  padding-top: 50px;
 }
 
 #changeBook label {
@@ -239,8 +245,18 @@ body {
 }
 
 .inputTitle {
-  width: 75%;
-  margin: 20px 0;
+  width: 50%;
+  margin-top: 75px;
+  margin-left: 110px;
+}
+
+input[type="text"].inputTitle.saved  {
+  background-color: transparent;
+  border: none;
+}
+
+#searchBookBtn {
+  margin-left: 15%;
 }
 
 .inputReview {
@@ -248,16 +264,92 @@ body {
   max-height: 400px;
 }
 
-#save-btn {
+.inputDate {
+  width: 15%;
+  margin-left: 150px;
+}
+
+.inputRating {
+  width: 15%;
+  margin-left: 150px;
+}
+
+#save-btn,
+#break-btn {
   position: absolute;
   bottom: 0;
   right: 0;
   margin: 40px;
 }
 
+#break-btn {
+  margin-right: 120px;
+}
+
+#book-options {
+  height: 100%;
+  position: fixed;
+  right: 0;
+  padding-top: 50px;
+  background-color: var(--lightest) !important;
+}
+
+#book-options a {
+  border-bottom: solid 0.05px var(--primary-color) !important;
+}
+
+#options {
+  height: 100%;
+  overflow-y: scroll;
+  scrollbar-color: var(--primary-color) var(--lightest);
+}
+
+.option {
+  background-color: var(--lightest) !important;
+  border-bottom: solid 0.05px var(--primary-color) !important;
+  margin: 0;
+}
+
+.option:hover {
+  background-color: var(--light) !important;
+  box-shadow: inset;
+}
+
+small img {
+  height: 50%;
+  width: auto;
+  margin-left: 5px;
+}
+
+.author-name,
+.book-title {
+  text-align: right;
+}
+
+.author-name {
+  margin-top: 15px;
+}
+
+#cancel-btn {
+  position: inherit;
+  margin: 10px;
+}
+
+#choose-book-btn {
+  position: inherit;
+  right: 0;
+  margin: 15px;
+}
+
+#no-books-found {
+  margin: 50px 10px;
+  text-align: left;
+}
+
 .footer {
+  position: fixed;
   bottom: 0;
   width: 100%;
-  padding: 10px 15px 0 0;
+  padding-right: 30px;
   text-align: right;
 }
