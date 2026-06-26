@@ -170,7 +170,7 @@ app.post("/add", async (req, res) => {
     res.redirect("/");
 });
 
-app.post("/search", async (req, res) => {
+app.post("/searchBook", async (req, res) => {
     const bookTitle = req.body.title;
     let data;
     try {

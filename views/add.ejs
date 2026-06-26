@@ -7,7 +7,7 @@
                 <span class="material-symbols-outlined">close_small</span>
             </button>
         </form>
-        <form id="searchBook" action="/search" method="post">
+        <form id="searchBook" action="/searchBook" method="post">
             <label for="title">Title:</label>
             <% if(locals.title) { %>
                 <input id="title" class="inputTitle saved" type="text" maxlength="75" name="title" value="<%= title %>" readonly>
