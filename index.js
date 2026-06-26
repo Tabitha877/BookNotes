@@ -204,6 +204,24 @@ app.get("/cancel", (req, res) => {
     res.redirect('/add');
 });
 
+app.post("/search", async (req, res) => {
+    const input = req.body.search;
+    let books;
+
+    try {
+        const result = await db.query("SELECT * FROM books WHERE LOWER(title) LIKE '%' || $1 || '%';", 
+            [input.toLowerCase()]
+        );
+        books = result.rows;
+    } catch (error) {
+        console.log(error)
+    }
+
+    res.render("index.ejs", {
+        books: books
+    });
+});
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
