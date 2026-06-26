@@ -66,7 +66,6 @@ async function fetchData(title) {
         bookCovers[i] = urlCover;
     }
 
-
     return {
         bookCovers,
         bookOptions
@@ -74,16 +73,28 @@ async function fetchData(title) {
 }
 
 app.get("/", async (req, res) => {
-    let result = await db.query("SELECT * FROM books");
-    let books = result.rows;
+    let result;
     
+    result = await db.query("SELECT * FROM books");
+    let books = result.rows;
+    // Get the book covers
     for (let i = 0; i < books.length; i++) {
         const bookId = books[i].id
         const result = await getNewCover(books[i].olid, bookId);
         books[i].cover = result;
     }
-
-    result = await db.query("SELECT * FROM books");
+    
+    // Order books by specified status
+    let order = req.query.status;
+    if (order === 'name') {
+        result = await db.query("Select * FROM books ORDER BY title");
+    } else if (order === 'rating') {
+        result = await db.query("Select * FROM books ORDER BY rating");
+    } else if (order === 'recency') {
+        result = await db.query("SELECT * FROM books ORDER BY date")
+    } else {
+        result = await db.query("SELECT * FROM books");
+    }
     books = result.rows;
 
     res.render("index.ejs", {
