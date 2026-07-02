@@ -1,28 +1,34 @@
     <%- include('./partials/header') %>
 
     <div class="page-content">
-        <% books.forEach(function(book) { %>
-            <div id="torn_edge_banner" class="torn_container torn_left torn_right">
-                <div id="booknote" class="container mt-4 background-image">
-                    <div class="book-cover">
-                        <img src="<%= book.cover %>" alt="Book Cover"/>
-                    </div>
-                    <div class="book-info">
-                        <h1> <%= book.title %> </h1>
-                        <div class="sorting-info">
-                            <p>date of read: <%= book.date %></p>
-                            <p>rating: <%= book.rating %></p>
+        <% if(books.length === 0) { %>
+            <div class="no-books">
+                <h1>No books to display.</h1>
+            </div>
+        <% } else { %>
+            <% books.forEach(function(book) { %>
+                <div id="torn_edge_banner" class="torn_container torn_left torn_right">
+                    <div id="booknote" class="container mt-4 background-image">
+                        <div class="book-cover">
+                            <img src="<%= book.cover %>" alt="Book Cover"/>
                         </div>
-                        <div class="book-review">
-                            <p> <%= book.review %> </p>
+                        <div class="book-info">
+                            <h1> <%= book.title %> </h1>
+                            <div class="sorting-info">
+                                <p>date of read: <%= book.date %></p>
+                                <p>rating: <%= book.rating %></p>
+                            </div>
+                            <div class="book-review">
+                                <p> <%= book.review %> </p>
+                            </div>
+                            <form action="/notes" method="get">
+                                <input type="hidden" name="bookId" value="<%= book.id %>">
+                                <button type="submit" class="btn btn-custom" id="view-more-btn">View More</button>
+                            </form>
                         </div>
-                        <form action="/notes" method="get">
-                            <input type="hidden" name="bookId" value="<%= book.id %>">
-                            <button type="submit" class="btn btn-custom" id="view-more-btn">View More</button>
-                        </form>
                     </div>
                 </div>
-            </div>
-        <% }); %> 
+            <% }); %> 
+        <% } %>
     </div>
     <%- include('./partials/footer') %>

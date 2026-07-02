@@ -32,6 +32,13 @@ body {
   margin-top: 75px;
 }
 
+.no-books {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .background-image {
   position: relative;
   max-width: 70em;
