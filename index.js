@@ -89,7 +89,7 @@ app.get("/", async (req, res) => {
     if (order === 'name') {
         result = await db.query("Select * FROM books ORDER BY title");
     } else if (order === 'rating') {
-        result = await db.query("Select * FROM books ORDER BY rating");
+        result = await db.query("Select * FROM books ORDER BY rating DESC");
     } else if (order === 'recency') {
         result = await db.query("SELECT * FROM books ORDER BY date")
     } else {
