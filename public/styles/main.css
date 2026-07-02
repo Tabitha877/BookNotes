@@ -44,7 +44,7 @@ body {
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 1;
+  z-index: 2;
 }
 
 .background-image::before {
@@ -292,6 +292,7 @@ input[type="text"].inputTitle.saved  {
   right: 0;
   padding-top: 50px;
   background-color: var(--lightest) !important;
+  z-index: 1;
 }
 
 #book-options a {
@@ -348,8 +349,8 @@ small img {
 
 .footer {
   position: fixed;
+  right: 0;
   bottom: 0;
-  width: 100%;
+  width: auto;
   padding-right: 30px;
-  text-align: right;
 }

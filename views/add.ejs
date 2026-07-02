@@ -12,7 +12,7 @@
             <% if(locals.title) { %>
                 <input id="title" class="inputTitle saved" type="text" maxlength="75" name="title" value="<%= title %>" readonly>
                 <form action="/add" method="get">
-                    <button type="submit" id="break-btn" class="btn btn-custom">Clear</button>
+                    <button type="submit" id="break-btn" class="btn delete-btn">Clear</button>
                 </form>
                 <% } else { %>
                 <input id="title" class="inputTitle" type="text" maxlength="75" name="title" placeholder="Title" required>
