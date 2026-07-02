@@ -160,8 +160,6 @@ app.get("/add", (req, res) => {
 });
 
 app.post("/add", async (req, res) => {
-    console.log(req.body);
-
     try {
         await db.query("INSERT INTO books (title, rating, review, olid, date) VALUES ($1, $2, $3, $4, $5)", [req.body.title, req.body.rating, req.body.review, req.body.olid, req.body.date]);
     } catch(error) {
@@ -191,8 +189,6 @@ app.post("/searchBook", async (req, res) => {
 app.get('/select', (req, res) => {
     const title = req.query.bookTitle;
     const olid = req.query.olid;
-
-    console.log("check: " + olid);
 
     res.render("add.ejs", {
         title: title,
