@@ -1,5 +1,6 @@
 <%- include('./partials/header') %>
 
+<!-- Book Note Page -->
     <div class="page-content">
         <div class="container booknote-big background-image">
             <div class="left-column">
@@ -21,16 +22,19 @@
                     <p><%= book.review %></p>
                 </div>
             </div>
+            <!-- Go back to home page -->
             <form action="/" method="get">
                 <button type="submit" class="btn" id="go-back-btn">
                     <span class="material-symbols-outlined">close_small</span>
                 </button>
             </form>
             <div class="buttons">
+                <!-- Go to the edit page -->
                 <form action="/edit" method="get">
                     <input type="hidden" name="bookId" value="<%= book.id %>">
                     <button type="submit" class="btn btn-custom" id="edit-btn">Edit</button>
                 </form>
+                <!-- Delete book and go back to home page -->
                 <form action="/delete" method="get">
                     <input type="hidden" name="bookId" value="<%= book.id %>">
                     <button type="submit" class="btn delete-btn" id="delete-btn">Delete</button>

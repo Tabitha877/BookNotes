@@ -1,11 +1,14 @@
     <%- include('./partials/header') %>
 
+    <!-- Main Content -->
     <div class="page-content">
+        <!-- if there is no content show message -->
         <% if(books.length === 0) { %>
             <div class="no-books">
                 <h1>No books to display.</h1>
             </div>
         <% } else { %>
+            <!-- Display each book -->
             <% books.forEach(function(book) { %>
                 <div id="torn_edge_banner" class="torn_container torn_left torn_right">
                     <div id="booknote" class="container mt-4 background-image">
