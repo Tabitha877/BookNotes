@@ -2,9 +2,9 @@
 
 <!-- Edit Book Page -->
     <div class="page-content">
-        <div class="container booknote-big background-image">
+        <div id="edit-book" class="container booknote-big background-image">
             <form id="changeBook" action="/edit" method="post">
-                <label for="title">Title:</label>
+                <label id="title-label" for="title">Title:</label>
                 <input id="title" class="inputTitle" type="text" maxlength="75" name="updatedTitle" value="<%= book.title %>" required>
                 <hr>
                 <label for="review">review:</label>

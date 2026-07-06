@@ -169,6 +169,7 @@ body {
 
 #booknote {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
   min-height: 350px;
   padding: 20px 0;
@@ -219,7 +220,6 @@ body {
 }
 
 .left-column {
-  width: 100;
   margin-right: 25px;
 }
 
@@ -249,6 +249,10 @@ body {
 
 #changeBook input, textarea {
   margin-left: 150px;
+}
+
+#title-label {
+  margin-top: 75px;
 }
 
 .inputTitle {
@@ -360,4 +364,205 @@ small img {
   bottom: 0;
   width: auto;
   padding-right: 30px;
+}
+
+@media (max-width: 1520px) {
+  
+  #booknote,
+  .booknote-big,
+  .booknote-add {
+    width: 85%;
+  }
+  
+  #booknote .book-cover {
+    display: flex;
+    justify-content: center;
+    width: 35%;
+  }
+  
+  #booknote .book-cover img {
+    max-width: 100%;
+  }
+
+  .inputReview {
+    max-height: 350px
+  }
+
+}
+
+@media (max-width: 1375px) {
+
+  #view-more-btn {
+    position: absolute;
+    top: 0;
+    right: 50px;
+    bottom: auto;
+    margin: 20px;
+  }
+
+  #booknote {
+    width: 70%;
+    justify-content: flex-start;
+    padding: 25px;
+  }
+
+  #booknote .book-info {
+    margin-top: 15px;
+  }
+
+  #booknote .book-cover {
+    max-width: 60%;
+  }
+
+  #booknote .sorting-info {
+    width: 60%;
+  }
+
+  .inputDate,
+  .inputRating {
+    width: 18%;
+  }
+}
+
+@media (max-width: 1000px) {
+
+  #booknote .book-review {
+    display: none;
+  }
+
+  #view-more-btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    top: auto;
+  }
+  
+  #booknote {
+    flex-wrap: nowrap;
+    width: 80%;
+  }
+
+  #booknote .sorting-info {
+    margin: 10px 0;
+    width: 100%;
+  }
+
+  #booknote .book-cover {
+    max-width: 60%;
+  }
+
+  #booknote .book-info {
+    max-width: 60%;
+    margin-left: 25px;
+  }
+
+  .booknote-big {
+    align-items: flex-start;
+    flex-direction: column;
+    height: auto;
+  }
+
+  .booknote-big .buttons {
+    margin-left: 0;
+  }
+
+  #go-back-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 25px 25px 30px 0;
+  }
+
+  .inputDate,
+  .inputRating {
+    width: 25%;
+  }
+
+  #save-btn,
+  #break-btn {
+    margin-bottom: 20px;
+  }
+
+  .booknote-add #title {
+    margin-left: 50px;
+  }
+
+  .booknote-add #searchBookBtn {
+    margin-left: 5px;
+  }
+}
+
+@media (max-width: 770px) {
+
+  #booknote .book-cover {
+    display: none;
+  }
+
+  #view-more-btn {
+    bottom: 0;
+    left: 0;
+    top: auto;
+  }
+
+  #booknote.book-info {
+    max-width: 100%;
+    margin-left: 0;
+  }
+
+  #booknote .sorting-info {
+    flex-direction: column;
+    padding-bottom: 20px;
+  }
+
+  #booknote {
+    width: 70%;
+    flex-direction: column;    
+  }
+
+  .container-fluid > form > button,
+  .container-fluid > form > input {
+    display: none;
+  }
+
+  .booknote-big {
+    align-items: flex-start;
+    height: auto;
+  }
+
+  .booknote-big .buttons {
+    margin-left: 0;
+  }
+
+  #edit-book {
+    height: 90%;
+  }
+
+  #review {
+    resize: none;
+    height: 100%;
+    width: 50%;
+  }
+
+  #changeBook label,
+  .inputTitle {
+    margin-top: 0;
+  }
+
+  .inputDate {
+    width: 50%;
+  }
+
+  .inputRating {
+    width: 40%;
+  }
+
+  .booknote-add #title {
+    width: 75%;
+    margin: 75px 0 0 10px;
+  }
+
+  .booknote-add #searchBookBtn {
+    margin-top: 15px;
+    width: 100%;
+  }
 }
