@@ -28,4 +28,13 @@
 * body-parser
 * axios
 
-## Visit app
+## Installation
+1. Clone repository
+2. Navigate to project folder
+3. run npm install
+4. Set up postgreSQL database, don't forget to set the database connection parameters (in index.js) to your personal user settings
+   <img width="573" height="34" alt="image" src="https://github.com/user-attachments/assets/59c686ab-8206-42b0-a632-9ca0857f4c92" />
+   <img width="634" height="39" alt="image" src="https://github.com/user-attachments/assets/7a507744-7161-493f-849f-4e7f7c05b865" />
+6. run nodemon index.js
+7. start server in google with: localhost:3000
+
